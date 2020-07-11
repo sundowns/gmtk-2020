@@ -21,6 +21,8 @@ function physics:update(dt)
     -- print(direction)
 
     local force = direction * thrust.strength
+    -- https://love2d.org/wiki/Body:applyForce
+    -- TODO: we can pass a point-of-action to make the force push the back of the car instead of from the centre
     physics_body.body:applyForce(force.x, force.y) -- think we need something to cap velocity, not sure how to do this in physics world
   end
 end
@@ -33,6 +35,16 @@ function physics:populate_world()
   _assemblages.car:assemble(Concord.entity(self:getWorld()), world_component.world, car_spawn)
 
   _assemblages.finish:assemble(Concord.entity(self:getWorld()), world_component.world, finish_spawn)
+
+  -- testing walls, TODO: remove
+  _assemblages.wall:assemble(
+    Concord.entity(self:getWorld()),
+    world_component.world,
+    Vector(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2),
+    200,
+    250,
+    1
+  )
 end
 
 function physics:get_world_component()

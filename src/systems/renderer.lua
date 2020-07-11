@@ -38,6 +38,7 @@ function renderer.draw_sprite(_, e)
 
   local velocity = Vector(physics_body.body:getLinearVelocity())
   local shmangle = Vector(0, -1):angleTo(velocity)
+  print(shmangle)
 
   -- if velocity:len() == 0 then
   --   shmangle = transform.rotation
@@ -50,7 +51,7 @@ function renderer.draw_sprite(_, e)
     image,
     physics_body.body:getX(),
     physics_body.body:getY(),
-    -shmangle,
+    shmangle,
     1,
     1,
     image:getWidth() / 2,

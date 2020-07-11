@@ -8,6 +8,7 @@ return Concord.assemblage(
       "static",
       love.physics.newRectangleShape(_constants.FINISH.WIDTH, _constants.FINISH.HEIGHT),
       0,
+      0,
       true
     ):give(_components.is_goal)
   end
