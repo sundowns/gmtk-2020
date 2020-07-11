@@ -1,6 +1,6 @@
 return {
   CAR = {
-    WIDTH = 32,
-    HEIGHT = 32
+    WIDTH = 15,
+    HEIGHT = 26
   }
 }

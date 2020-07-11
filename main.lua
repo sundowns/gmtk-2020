@@ -2,7 +2,7 @@ function love.load()
     GamestateManager = require("libs.gamestate")
     require("loading")
     require("game")
-    -- love.window.setIcon(love.image.newImageData("resources/sprites/icon.png"))
+    love.window.setIcon(love.image.newImageData("resources/sprites/car.png"))
     GamestateManager.registerEvents()
     GamestateManager.switch(loading)
 end

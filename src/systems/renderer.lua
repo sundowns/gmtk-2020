@@ -35,16 +35,29 @@ function renderer:draw_sprite(e)
   local sprite = e:get(_components.sprite) -- TODO, draw this as an image instead
   local physics_body = e:get(_components.physics_body)
 
-  -- local shmangle = Vector(0, -1):angleTo(transform.velocity)
+  local velocity = Vector(physics_body.body:getLinearVelocity())
+  local shmangle = Vector(0, -1):angleTo(velocity)
 
-  -- if transform.velocity:len() == 0 then
+  -- if velocity:len() == 0 then
   --   shmangle = transform.rotation
   -- else
   --   transform.rotation = shmangle
   -- end
 
-  love.graphics.polygon("fill", physics_body.body:getWorldPoints(physics_body.shape:getPoints()))
-  -- love.graphics.draw(image, position.x, position.y, -shmangle, 1, 1, image:getWidth() / 2, image:getHeight() / 2)
+  if _DEBUG then
+    love.graphics.polygon("line", physics_body.body:getWorldPoints(physics_body.shape:getPoints()))
+  end
+  local image = sprite.image
+  love.graphics.draw(
+    image,
+    physics_body.body:getX(),
+    physics_body.body:getY(),
+    -shmangle,
+    1,
+    1,
+    image:getWidth() / 2,
+    image:getHeight() / 2
+  )
 end
 
 function renderer:draw()

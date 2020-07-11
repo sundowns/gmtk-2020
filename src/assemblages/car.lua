@@ -7,6 +7,6 @@ return Concord.assemblage(
       origin,
       "dynamic",
       love.physics.newRectangleShape(_constants.CAR.WIDTH, _constants.CAR.HEIGHT)
-    ):give(_components.sprite):give(_components.thrust, 20)
+    ):give(_components.sprite, love.graphics.newImage("resources/sprites/car.png")):give(_components.thrust, 10)
   end
 )

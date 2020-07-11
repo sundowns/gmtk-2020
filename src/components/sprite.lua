@@ -1,6 +1,7 @@
 local sprite =
   Concord.component(
-  function(_) -- TODO: take a spritesheet & quad probably, maybe array of frames or whatever
+  function(e, image) -- TODO: take a spritesheet & quad probably, maybe array of frames or whatever
+    e.image = image
   end
 )
 
