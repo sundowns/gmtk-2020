@@ -1,5 +1,6 @@
 -- Draws polygonal shapes to the screen
-local renderer = Concord.system({_components.sprite, _components.physics_body, "DRAWABLES"})
+local renderer =
+  Concord.system({_components.sprite, _components.physics_body, "DRAWABLES"}, {_components.physics_body, "BODIES"})
 
 function renderer:init()
   self.game_over = false
@@ -31,8 +32,8 @@ function renderer:update(dt)
   end
 end
 
-function renderer:draw_sprite(e)
-  local sprite = e:get(_components.sprite) -- TODO, draw this as an image instead
+function renderer.draw_sprite(_, e)
+  local sprite = e:get(_components.sprite)
   local physics_body = e:get(_components.physics_body)
 
   local velocity = Vector(physics_body.body:getLinearVelocity())
@@ -44,9 +45,6 @@ function renderer:draw_sprite(e)
   --   transform.rotation = shmangle
   -- end
 
-  if _DEBUG then
-    love.graphics.polygon("line", physics_body.body:getWorldPoints(physics_body.shape:getPoints()))
-  end
   local image = sprite.image
   love.graphics.draw(
     image,
@@ -58,6 +56,13 @@ function renderer:draw_sprite(e)
     image:getWidth() / 2,
     image:getHeight() / 2
   )
+end
+
+function renderer.draw_debug_outline(_, e)
+  local physics_body = e:get(_components.physics_body)
+  if _DEBUG then
+    love.graphics.polygon("line", physics_body.body:getWorldPoints(physics_body.shape:getPoints()))
+  end
 end
 
 function renderer:draw()
@@ -73,7 +78,12 @@ function renderer:draw()
   for i = 1, self.DRAWABLES.size do
     self:draw_sprite(self.DRAWABLES:get(i))
   end
-  love.graphics.setLineWidth(1)
+
+  if _DEBUG then
+    for i = 1, self.BODIES.size do
+      self:draw_debug_outline(self.BODIES:get(i))
+    end
+  end
 
   if self.shake_screen then
     love.graphics.pop()

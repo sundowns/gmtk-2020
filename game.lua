@@ -1,6 +1,6 @@
 game = {}
 local _worlds = nil -- should not have visbility of each other...
-_DEBUG = false
+_DEBUG = true -- TODO: not
 
 function game:init()
   Concord = require("libs.concord")

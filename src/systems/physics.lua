@@ -2,7 +2,7 @@ local physics =
   Concord.system(
   {_components.physics_body, "ENTITIES"},
   {_components.world, "WORLD"},
-  {_components.thrust, _components.physics_body, "CAR"}
+  {_components.thrust, _components.physics_body, _components.is_car, "CAR"}
 )
 function physics:update(dt)
   local world_component = self:get_world_component()
@@ -14,18 +14,25 @@ function physics:update(dt)
     local car = self.CAR:get(i)
     local physics_body = car:get(_components.physics_body)
     local thrust = car:get(_components.thrust)
-    local direction = Vector(0, -1) -- Up. TODO: define a car's orientation and push along that
+
+    local angle = physics_body.body:getAngle() - math.pi / 2 -- default is to the right, so rotate it up... i guess >_>
+
+    local direction = Vector.fromPolar(angle):normalized()
+    -- print(direction)
 
     local force = direction * thrust.strength
-    physics_body.body:applyForce(force.x, force.y)
+    physics_body.body:applyForce(force.x, force.y) -- think we need something to cap velocity, not sure how to do this in physics world
   end
 end
 
 function physics:populate_world()
   local car_spawn = Vector(love.graphics.getWidth() / 2, love.graphics.getHeight() * 0.8)
+  local finish_spawn = Vector(love.graphics.getWidth() / 2, 0)
 
   local world_component = self:get_world_component()
   _assemblages.car:assemble(Concord.entity(self:getWorld()), world_component.world, car_spawn)
+
+  _assemblages.finish:assemble(Concord.entity(self:getWorld()), world_component.world, finish_spawn)
 end
 
 function physics:get_world_component()
