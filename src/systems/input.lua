@@ -1,4 +1,6 @@
 local input = Concord.system({_components.control})
+-- TODO: we probably just want to flat out react to keys for obstacles, no need for binds I think
+-- (actually maybe the individual obstacles have a control component..)
 function input:init()
   self.timer = Timer.new()
   self.polling_rate = 0.01
